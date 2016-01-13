@@ -371,7 +371,7 @@
                 <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
                 <?php } ?>
                 <?php if(isset($product['best_price']) && $product['best_price'] == 1) { ?>
-                <img src="http://localhost/catalog/view/theme/default/image/temporary-lowest-price.png" class="best-price">
+                <img src="<?php=DIR_THEME_DEFAULT_IMAGE ?>/temporary-lowest-price.png" class="best-price">
                 <?php } ?>
               </p>
               <?php } ?>
