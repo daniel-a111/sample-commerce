@@ -58,6 +58,7 @@
         <?php foreach ($products as $product) { ?>
         <div class="product-layout product-list col-xs-12">
           <div class="product-thumb">
+            <h1>עומר תשיר</h1>
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div class="caption">
               <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
@@ -82,6 +83,9 @@
                 <?php } ?>
                 <?php if ($product['tax']) { ?>
                 <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+                <?php } ?>
+                <?php if(isset($product['best_price']) && $product['best_price'] == 1) { ?>
+                <img src="http://localhost/catalog/view/theme/default/image/temporary-lowest-price.png" class="best-price">
                 <?php } ?>
               </p>
               <?php } ?>

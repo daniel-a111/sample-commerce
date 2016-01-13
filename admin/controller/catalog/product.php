@@ -65,6 +65,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function edit() {
+
 		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -72,6 +73,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+
+
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -368,6 +371,7 @@ class ControllerCatalogProduct extends Controller {
 				'name'       => $result['name'],
 				'model'      => $result['model'],
 				'price'      => $result['price'],
+				'best_price' => $result['best_price'],
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
@@ -558,6 +562,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_best_price'] = 'Best price?';
+
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$data['entry_points'] = $this->language->get('entry_points');
 		$data['entry_option_points'] = $this->language->get('entry_option_points');
@@ -854,6 +860,15 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['price'] = '';
 		}
+
+		if (isset($this->request->post['best_price'])) {
+			$data['best_price_input'] = isset($this->request->post['best_price'])?1:0;
+		} elseif (!empty($product_info)) {
+			$data['best_price_input'] = (isset($product_info['best_price']) && $product_info['best_price'] == 1)?1:0;
+		} else {
+			$data['best_price_input'] = 0;
+		}
+
 
 		$this->load->model('catalog/recurring');
 

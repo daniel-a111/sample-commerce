@@ -114,7 +114,7 @@ div.required .control-label:before {
 }
 #top .btn-link strong {
 	font-size: 14px;
-        line-height: 14px;
+	line-height: 14px;
 }
 #top-links {
 	padding-top: 6px;
@@ -541,10 +541,10 @@ footer h5 {
 	float: none;
 }
 @media (min-width: 767px) {
-.product-list .product-thumb .image {
-	float: left;
-	padding: 0 15px;
-}
+	.product-list .product-thumb .image {
+		float: left;
+		padding: 0 15px;
+	}
 }
 .product-thumb h4 {
 	font-weight: bold;
@@ -557,20 +557,20 @@ footer h5 {
 	margin-left: 230px;
 }
 @media (max-width: 1200px) {
-.product-grid .product-thumb .caption {
-	min-height: 210px;
-	padding: 0 10px;
-}
+	.product-grid .product-thumb .caption {
+		min-height: 210px;
+		padding: 0 10px;
+	}
 }
 @media (max-width: 767px) {
-.product-list .product-thumb .caption {
-	min-height: 0;
-	margin-left: 0;
-	padding: 0 10px;
-}
-.product-grid .product-thumb .caption {
-	min-height: 0;
-}
+	.product-list .product-thumb .caption {
+		min-height: 0;
+		margin-left: 0;
+		padding: 0 10px;
+	}
+	.product-grid .product-thumb .caption {
+		min-height: 0;
+	}
 }
 .product-thumb .rating {
 	padding-bottom: 10px;
@@ -713,21 +713,21 @@ h2.price {
 
 /* fixed colum left + content + right*/
 @media (min-width: 768px) {
-    #column-left  .product-layout .col-md-3 {
-       width: 100%;
-    }
+	#column-left  .product-layout .col-md-3 {
+		width: 100%;
+	}
 
 	#column-left + #content .product-layout .col-md-3 {
-       width: 50%;
-    }
+		width: 50%;
+	}
 
 	#column-left + #content + #column-right .product-layout .col-md-3 {
-       width: 100%;
-    }
+		width: 100%;
+	}
 
-    #content + #column-right .product-layout .col-md-3 {
-       width: 100%;
-    }
+	#content + #column-right .product-layout .col-md-3 {
+		width: 100%;
+	}
 }
 
 /* fixed product layouts used in left and right columns */
@@ -742,6 +742,11 @@ h2.price {
 
 /* Missing focus and border color to overwrite bootstrap */
 .btn-info:hover, .btn-info:active, .btn-info.active, .btn-info.disabled, .btn-info[disabled] {
-    background-image: none;
-    background-color: #df5c39;
+	background-image: none;
+	background-color: #df5c39;
+}
+
+.best-price{
+	width: 90px;
+	margin: -39px 0 0 139px;
 }

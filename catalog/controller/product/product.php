@@ -310,6 +310,8 @@ class ControllerProductProduct extends Controller {
 				$data['price'] = false;
 			}
 
+			$data['best_price'] = $product_info['best_price'];
+
 			if ((float)$product_info['special']) {
 				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
 			} else {
@@ -334,6 +336,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			$data['options'] = array();
+
 
 			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
 				$product_option_value_data = array();
@@ -423,6 +426,8 @@ class ControllerProductProduct extends Controller {
 					$special = false;
 				}
 
+				$best_price = $result['best_price'];
+
 				if ($this->config->get('config_tax')) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
 				} else {
@@ -441,6 +446,7 @@ class ControllerProductProduct extends Controller {
 					'name'        => $result['name'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,
+					'best_price'  => $best_price,
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
@@ -669,6 +675,7 @@ class ControllerProductProduct extends Controller {
 		}
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
+
 		$recurring_info = $this->model_catalog_product->getProfile($product_id, $recurring_id);
 
 		$json = array();

@@ -1,12 +1,10 @@
 <?php
 class ControllerProductCategory extends Controller {
 	public function index() {
+
 		$this->load->language('product/category');
-
 		$this->load->model('catalog/category');
-
 		$this->load->model('catalog/product');
-
 		$this->load->model('tool/image');
 
 		if (isset($this->request->get['filter'])) {
@@ -93,9 +91,9 @@ class ControllerProductCategory extends Controller {
 			$this->document->setTitle($category_info['meta_title']);
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
+			//$this->document->addStyle('catalog/view/theme/default/stylesheet/tashir.css');
 
 			$data['heading_title'] = $category_info['name'];
-
 			$data['text_refine'] = $this->language->get('text_refine');
 			$data['text_empty'] = $this->language->get('text_empty');
 			$data['text_quantity'] = $this->language->get('text_quantity');
@@ -122,7 +120,7 @@ class ControllerProductCategory extends Controller {
 			);
 
 			if ($category_info['image']) {
-				$data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+				$data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_thumb_width'),$this->config->get('config_image_thumb_height'));
 			} else {
 				$data['thumb'] = '';
 			}
@@ -175,15 +173,16 @@ class ControllerProductCategory extends Controller {
 				'limit'              => $limit
 			);
 
+
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+					$image = $this->model_tool_image->resize($result['image'],$this->config->get('config_image_thumb_width'),$this->config->get('config_image_thumb_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+					$image = $this->model_tool_image->resize('placeholder.png',$this->config->get('config_image_thumb_width'),$this->config->get('config_image_thumb_height'));
 				}
 
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -192,11 +191,14 @@ class ControllerProductCategory extends Controller {
 					$price = false;
 				}
 
+
 				if ((float)$result['special']) {
 					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$special = false;
 				}
+
+				$best_price = $result['best_price'];
 
 				if ($this->config->get('config_tax')) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
@@ -210,12 +212,23 @@ class ControllerProductCategory extends Controller {
 					$rating = false;
 				}
 
+
+				$max_description_length = 100;
+
+				$description = html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8');
+				if(utf8_strlen($description) > $max_description_length)
+				{
+					$description = utf8_substr(strip_tags($description), 0, $max_description_length);
+					$description = utf8_substr($description, 0, strrpos($description, ' ')) . '...';
+				}
+
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => $description,
 					'price'       => $price,
+					'best_price'  => $best_price,
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
@@ -290,6 +303,12 @@ class ControllerProductCategory extends Controller {
 				'text'  => $this->language->get('text_model_desc'),
 				'value' => 'p.model-DESC',
 				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.model&order=DESC' . $url)
+			);
+
+			$data['sorts'][] = array(
+				'text'  => 'Best Price',
+				'value' => 'p.best_price',
+				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.best_price' . $url)
 			);
 
 			$url = '';
@@ -374,12 +393,14 @@ class ControllerProductCategory extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/category.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/category.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/product/category.tpl', $data));
 			}
-		} else {
+		}
+		else {
 			$url = '';
 
 			if (isset($this->request->get['path'])) {
