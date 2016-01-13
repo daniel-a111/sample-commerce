@@ -100,7 +100,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
-		if (((!empty($data['filter_category_id']))&&($data['filter_category_id']=='60'))||$data['sort']=='p.best_price') {
+		if (((!empty($data['filter_category_id']))&&($data['filter_category_id']=='59'))||$data['sort']=='p.best_price') {
 			$sql .= "AND p.best_price = 1";
 		}
 
