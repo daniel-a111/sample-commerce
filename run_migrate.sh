@@ -1,1 +1,1 @@
-php vendor/bin/phinx migrate
+cd migrations && php vendor/bin/phinx migrate
