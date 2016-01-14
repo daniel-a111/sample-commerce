@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title"><a href="#collapse-shipping" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
+    <h4 class="panel-title"><a href="#collapse-discount" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
   </div>
-  <div id="collapse-shipping" class="panel-collapse collapse">
+  <div id="collapse-discount" class="panel-collapse collapse">
     <div class="panel-body">
-      <p><?php echo $text_shipping; ?></p>
+      <p><?php echo $text_discount; ?></p>
       <div class="form-horizontal">
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
@@ -39,7 +39,7 @@
       <script type="text/javascript"><!--
 $('#button-quote').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=total/shipping/quote',
+		url: 'index.php?route=total/discount/quote',
 		type: 'post',
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
 		dataType: 'json',
@@ -72,35 +72,35 @@ $('#button-quote').on('click', function() {
 				}
 			}
 
-			if (json['shipping_method']) {
-				$('#modal-shipping').remove();
+			if (json['discount_method']) {
+				$('#modal-discount').remove();
 
-				html  = '<div id="modal-shipping" class="modal">';
+				html  = '<div id="modal-discount" class="modal">';
 				html += '  <div class="modal-dialog">';
 				html += '    <div class="modal-content">';
 				html += '      <div class="modal-header">';
-				html += '        <h4 class="modal-title"><?php echo $text_shipping_method; ?></h4>';
+				html += '        <h4 class="modal-title"><?php echo $text_discount_method; ?></h4>';
 				html += '      </div>';
 				html += '      <div class="modal-body">';
 
-				for (i in json['shipping_method']) {
-					html += '<p><strong>' + json['shipping_method'][i]['title'] + '</strong></p>';
+				for (i in json['discount_method']) {
+					html += '<p><strong>' + json['discount_method'][i]['title'] + '</strong></p>';
 
-					if (!json['shipping_method'][i]['error']) {
-						for (j in json['shipping_method'][i]['quote']) {
+					if (!json['discount_method'][i]['error']) {
+						for (j in json['discount_method'][i]['quote']) {
 							html += '<div class="radio">';
 							html += '  <label>';
 
-							if (json['shipping_method'][i]['quote'][j]['code'] == '<?php echo $shipping_method; ?>') {
-								html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked="checked" />';
+							if (json['discount_method'][i]['quote'][j]['code'] == '<?php echo $discount_method; ?>') {
+								html += '<input type="radio" name="discount_method" value="' + json['discount_method'][i]['quote'][j]['code'] + '" checked="checked" />';
 							} else {
-								html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" />';
+								html += '<input type="radio" name="discount_method" value="' + json['discount_method'][i]['quote'][j]['code'] + '" />';
 							}
 
-							html += json['shipping_method'][i]['quote'][j]['title'] + ' - ' + json['shipping_method'][i]['quote'][j]['text'] + '</label></div>';
+							html += json['discount_method'][i]['quote'][j]['title'] + ' - ' + json['discount_method'][i]['quote'][j]['text'] + '</label></div>';
 						}
 					} else {
-						html += '<div class="alert alert-danger">' + json['shipping_method'][i]['error'] + '</div>';
+						html += '<div class="alert alert-danger">' + json['discount_method'][i]['error'] + '</div>';
 					}
 				}
 
@@ -108,10 +108,10 @@ $('#button-quote').on('click', function() {
 				html += '      <div class="modal-footer">';
 				html += '        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel; ?></button>';
 
-				<?php if ($shipping_method) { ?>
-				html += '        <input type="button" value="<?php echo $button_shipping; ?>" id="button-shipping" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />';
+				<?php if ($discount_method) { ?>
+				html += '        <input type="button" value="<?php echo $button_discount; ?>" id="button-discount" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />';
 				<?php } else { ?>
-				html += '        <input type="button" value="<?php echo $button_shipping; ?>" id="button-shipping" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" disabled="disabled" />';
+				html += '        <input type="button" value="<?php echo $button_discount; ?>" id="button-discount" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" disabled="disabled" />';
 				<?php } ?>
 
 				html += '      </div>';
@@ -121,27 +121,27 @@ $('#button-quote').on('click', function() {
 
 				$('body').append(html);
 
-				$('#modal-shipping').modal('show');
+				$('#modal-discount').modal('show');
 
-				$('input[name=\'shipping_method\']').on('change', function() {
-					$('#button-shipping').prop('disabled', false);
+				$('input[name=\'discount_method\']').on('change', function() {
+					$('#button-discount').prop('disabled', false);
 				});
 			}
 		}
 	});
 });
 
-$(document).delegate('#button-shipping', 'click', function() {
+$(document).delegate('#button-discount', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=total/shipping/shipping',
+		url: 'index.php?route=total/discount/discount',
 		type: 'post',
-		data: 'shipping_method=' + encodeURIComponent($('input[name=\'shipping_method\']:checked').val()),
+		data: 'discount_method=' + encodeURIComponent($('input[name=\'discount_method\']:checked').val()),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-shipping').button('loading');
+			$('#button-discount').button('loading');
 		},
 		complete: function() {
-			$('#button-shipping').button('reset');
+			$('#button-discount').button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();
@@ -162,7 +162,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=total/shipping/country&country_id=' + this.value,
+		url: 'index.php?route=total/discount/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

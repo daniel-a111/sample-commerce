@@ -3,7 +3,7 @@
 $_['heading_title']    = 'Discount';
 
 // Text
-$_['text_total']       = 'Order Totals';
+$_['text_discount']    = 'Discount-Total';
 $_['text_success']     = 'Success: You have modified discount total!';
 $_['text_edit']        = 'Edit Discount Total';
 

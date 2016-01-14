@@ -25,6 +25,7 @@ class ControllerTotalTotal extends Controller {
 
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_discount'] = $this->language->get('entry_discount');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');

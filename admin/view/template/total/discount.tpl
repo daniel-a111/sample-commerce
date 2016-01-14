@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-shipping" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-discount" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -24,26 +24,12 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-shipping" class="form-horizontal">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-estimator"><?php echo $entry_estimator; ?></label>
-            <div class="col-sm-10">
-              <select name="shipping_estimator" id="input-estimator" class="form-control">
-                <?php if ($shipping_estimator) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-discount" class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="shipping_status" id="input-status" class="form-control">
-                <?php if ($shipping_status) { ?>
+              <select name="discount_status" id="input-status" class="form-control">
+                <?php if ($discount_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -54,9 +40,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+            <label class="col-sm-2 control-label" for="discount_sort_order"><?php echo $entry_sort_order; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_sort_order" value="<?php echo $shipping_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+              <input type="text" name="discount_sort_order" value="<?php echo $discount_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="discount_sort_order" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="discount_amount"><?php echo $entry_discount; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="discount_amount" value="<?php echo $discount_amount; ?>" placeholder="<?php echo $entry_discount; ?>" id="discount_amount" class="form-control" />
             </div>
           </div>
         </form>
