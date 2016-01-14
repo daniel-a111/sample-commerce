@@ -5,6 +5,8 @@ define('HTTP_SERVER', 'http://localhost/sample-commerce/');
 // HTTPS
 define('HTTPS_SERVER', 'http://localhost/sample-commerce/');
 
+define('ENV', 'development');
+
 // DIR
 define('DIR_APPLICATION', '/var/www/html/sample-commerce/catalog/');
 define('DIR_SYSTEM', '/var/www/html/sample-commerce/system/');

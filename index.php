@@ -1,10 +1,18 @@
 <?php
+
 // Version
 define('VERSION', '2.1.0.2');
 
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
+}
+
+if(ENV == 'development')
+{
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
 }
 
 // Install
